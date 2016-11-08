@@ -1,0 +1,37 @@
+# Pythagorean Win Expectation Formula
+def calc_pwl(list):
+	team_pwl = [[0 for j in range(len(list[i]))] for i in range(len(list))]
+	for i in range(len(list)):
+		team = list[i][0]
+		pf = list[i][1]
+		pa = list[i][2]
+		if len(list[i]) == 4: gp = list[i][3]
+		else: gp = 82
+		pwin = round(((pf**13.91)/((pf**13.91)+(pa**13.91)))*gp)
+		ploss = gp-pwin
+		team_pwl[i][0] = team.upper()
+		team_pwl[i][1] = pwin
+		team_pwl[i][2] = ploss
+	team_pwl = sorted(team_pwl, key=lambda wins: wins[1], reverse=True)
+	return team_pwl
+def format_pwl(*team_pwl):
+	if len(team_pwl) > 1:
+		print ('Pythagorean Win Expectations')
+		for i in range(len(team_pwl)):
+			print ('  %s: %i-%i' % (team_pwl[i][0],team_pwl[i][1],team_pwl[i][2]))
+	else:
+		for i in range(len(team_pwl)):
+			print ('PWL for %s: %i-%i' % (team_pwl[i][0],team_pwl[i][1],team_pwl[i][2]))
+def pwl(list):
+	format_pwl(*calc_pwl(team))
+
+# Team Data
+team = [
+	['GSW',114.9,104.1],
+	['CLE',104.3,98.3],
+	['PHI',97.4,107.6],
+	['bkn',98.6,106],
+	['atl',102.8,99.2]
+	]
+
+pwl(team)
